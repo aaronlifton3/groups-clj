@@ -1,6 +1,6 @@
 (ns pantanomic.core
-  (:use [[compojure.core :only [defroutes]
-	 [hiccup.page-helpers :only [html5]]])
+  (:use [compojure.core :only [defroutes]]
+	      [hiccup.page-helpers :only [html5]])
   (:require [compojure.route :as route]
 	    [compojure.handler :as handler]
 	    [ring.adapter.jetty :as ring]
@@ -10,11 +10,11 @@
 (defroutes routes
   pantanomic.controllers.posts/routes
   (route/resources "/")
-  (route/not-found (layout/four-oh-four))
+  (route/not-found (layout/four-oh-four)))
 
-(def application (handler/site routes)
+(def application (handler/site routes))
 
-(defn start []
+(defn start [port]
   (ring/run-jetty #'application {:port (or port 8080) :join? false}))
 
 (defn -main []
